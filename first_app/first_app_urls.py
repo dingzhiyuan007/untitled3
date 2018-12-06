@@ -14,18 +14,15 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path,re_path,include
+from django.urls import path,re_path
 from first_app import views as tv
-from first_app import first_app_urls
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    # re_path(r'^normalmap',tv.first_normalmap),
-    # # 尖号表示以后面内容开头的表达式
-    # # 圆括号表示的是一个参数，里面的内容作为参数传递给被调用的函数
-    # # 参数名称以问好加大写P开头，尖括号里面就是参数的名字
-    # # 尖括号后表示正则，[0-9]表示内容仅能是有0-9的数字构成，
-    # # 后面大括号表示出现的次数，此处4表示只能出现四个0-9的数字
-    # re_path(r'^withparam/(?P<year>[0-9]{4})/(?P<month>[0,1][0-9])',tv.withparam),
-    re_path(r'first_app/',include(first_app_urls))
+
+    re_path(r'index/',tv.first_normalmap),
+    re_path(r'withparam/(?P<name>[\u4E00-\u9FA5]+|[a-zA-Z]+)/',tv.withparam),
+    re_path(r'insideparam/(?:age-(?P<age>\d+))',tv.insideparam),
+    re_path(r'ownparam/(?P<old>\d+)',tv.ownparam,{'car':'benz'}),
+    re_path(r'nameparam/',tv.nameparam,name = 'kangkang')
+
 ]
